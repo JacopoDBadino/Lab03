@@ -1,8 +1,11 @@
 package it.polito.tdp.spellchecker;
 
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.spellchecker.model.Dictionary;
+import it.polito.tdp.spellchecker.model.RichWord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,9 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.shape.Line;
 
 public class FXMLController {
 
+	Dictionary dizionario;
 	ObservableList<String> lingue = FXCollections.observableArrayList("English", "Italiano");
 
 	@FXML
@@ -48,11 +53,26 @@ public class FXMLController {
 
 	@FXML
 	void clearAll(ActionEvent event) {
+		areaTesto1.setText("");
+		spazioFinale.setText("");
 
 	}
 
 	@FXML
 	void confermaFrase(ActionEvent event) {
+		String testo = areaTesto1.getText();
+		String[] paroleTesto;
+		paroleTesto = testo.split(" ");
+		LinkedList<String> paroleTXT = new LinkedList<String>();
+		for (String s : paroleTesto)
+			paroleTXT.add(s);
+
+		LinkedList<RichWord> finale = dizionario.spellCheckText(paroleTXT);
+
+		for (RichWord r : finale) {
+			if (r.isEsiste()==false)
+				spazioFinale.appendText(r.getParola());
+		}
 
 	}
 
@@ -63,14 +83,15 @@ public class FXMLController {
 			labelParoleSbagliate.setText("Parole sbagliate: ");
 			butt1.setText("Controllo ortografico");
 			cdlB.setText("Scegli la lingua");
-
-		}  
+			dizionario.loadDictionary("src/main/resources/Italian");
+		}
 
 		if (sceltaLinguaB.getValue().equals("English")) {
 			clearAllB.setText("Clear Text");
 			labelParoleSbagliate.setText("Wrong words: ");
 			butt1.setText("Spell Check");
 			cdlB.setText("Choose the language:");
+			dizionario.loadDictionary("src/main/resources/English");
 		}
 	}
 
@@ -88,5 +109,10 @@ public class FXMLController {
 		sceltaLinguaB.setValue("English");
 		sceltaLinguaB.setItems(lingue);
 
+	}
+
+	public void setDizionario(Dictionary dizionario) {
+		this.dizionario = dizionario;
+		dizionario.loadDictionary("src/main/resources/English");
 	}
 }
