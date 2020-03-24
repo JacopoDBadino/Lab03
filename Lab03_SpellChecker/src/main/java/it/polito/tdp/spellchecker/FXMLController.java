@@ -64,7 +64,7 @@ public class FXMLController {
 			butt1.setText("Controllo ortografico");
 			cdlB.setText("Scegli la lingua");
 
-		}
+		}  
 
 		if (sceltaLinguaB.getValue().equals("English")) {
 			clearAllB.setText("Clear Text");
