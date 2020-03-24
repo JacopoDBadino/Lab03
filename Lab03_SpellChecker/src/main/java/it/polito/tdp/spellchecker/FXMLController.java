@@ -54,12 +54,13 @@ public class FXMLController {
 	@FXML
 	void clearAll(ActionEvent event) {
 		areaTesto1.setText("");
-		spazioFinale.setText("");
+		spazioFinale.setText("Benvenuto!");
 
 	}
 
 	@FXML
 	void confermaFrase(ActionEvent event) {
+		spazioFinale.setText("");
 		String testo = areaTesto1.getText();
 		String[] paroleTesto;
 		paroleTesto = testo.split(" ");
@@ -70,8 +71,11 @@ public class FXMLController {
 		LinkedList<RichWord> finale = dizionario.spellCheckText(paroleTXT);
 
 		for (RichWord r : finale) {
-			if (r.isEsiste()==false)
-				spazioFinale.appendText(r.getParola());
+			if (r.isEsiste() == false)
+				if (spazioFinale.getText().equals(""))
+					spazioFinale.appendText(r.getParola());
+				else
+					spazioFinale.appendText("\n" + r.getParola());
 		}
 
 	}
@@ -108,6 +112,7 @@ public class FXMLController {
 
 		sceltaLinguaB.setValue("English");
 		sceltaLinguaB.setItems(lingue);
+		spazioFinale.setText("Benvenuto!");
 
 	}
 

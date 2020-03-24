@@ -35,11 +35,11 @@ public class Dictionary {
 		
 		try {
 			for (String s : inputTextList) {
-				s.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
-				if (diz.contains(s.toLowerCase()))
-					parole.add(new RichWord(s, true));
+				String s2 = s.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
+				if (diz.contains(s2.toLowerCase()))
+					parole.add(new RichWord(s2, true));
 				else
-					parole.add(new RichWord(s, false));
+					parole.add(new RichWord(s2, false));
 
 			}
 
