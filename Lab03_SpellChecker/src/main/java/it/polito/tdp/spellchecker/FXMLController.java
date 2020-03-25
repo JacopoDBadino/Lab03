@@ -54,29 +54,50 @@ public class FXMLController {
 	@FXML
 	void clearAll(ActionEvent event) {
 		areaTesto1.setText("");
-		spazioFinale.setText("Benvenuto!");
+		if (sceltaLinguaB.getValue().equals("English")) {
+			spazioFinale.setText("Welcome!");
+			labelFondoPagina.setText("                                         ");
+
+		}
+		else {
+			spazioFinale.setText("Benvenuto!");
+			labelFondoPagina.setText("                                      ");
+
+			
+		}
 
 	}
 
 	@FXML
 	void confermaFrase(ActionEvent event) {
+		int cont = 0;
 		spazioFinale.setText("");
+		
 		String testo = areaTesto1.getText();
 		String[] paroleTesto;
 		paroleTesto = testo.split(" ");
+		
 		LinkedList<String> paroleTXT = new LinkedList<String>();
 		for (String s : paroleTesto)
 			paroleTXT.add(s);
 
 		LinkedList<RichWord> finale = dizionario.spellCheckText(paroleTXT);
-
+		
 		for (RichWord r : finale) {
-			if (r.isEsiste() == false)
+			if (r.isEsiste() == false) {
 				if (spazioFinale.getText().equals(""))
 					spazioFinale.appendText(r.getParola());
 				else
 					spazioFinale.appendText("\n" + r.getParola());
+			
+				cont++;
+			}
 		}
+		
+		if(sceltaLinguaB.getValue().equals("Italiano"))
+			labelFondoPagina.setText("Il testo contiene " + cont + " errori");
+			else labelFondoPagina.setText("The text contains " + cont+ " errors");
+			 
 
 	}
 
@@ -87,6 +108,7 @@ public class FXMLController {
 			labelParoleSbagliate.setText("Parole sbagliate: ");
 			butt1.setText("Controllo ortografico");
 			cdlB.setText("Scegli la lingua");
+			spazioFinale.setText("Benvenuto!");
 			dizionario.loadDictionary("src/main/resources/Italian");
 		}
 
@@ -95,6 +117,7 @@ public class FXMLController {
 			labelParoleSbagliate.setText("Wrong words: ");
 			butt1.setText("Spell Check");
 			cdlB.setText("Choose the language:");
+			spazioFinale.setText("Welcome!");
 			dizionario.loadDictionary("src/main/resources/English");
 		}
 	}
@@ -112,7 +135,7 @@ public class FXMLController {
 
 		sceltaLinguaB.setValue("English");
 		sceltaLinguaB.setItems(lingue);
-		spazioFinale.setText("Benvenuto!");
+		spazioFinale.setText("Welcome!");
 
 	}
 
