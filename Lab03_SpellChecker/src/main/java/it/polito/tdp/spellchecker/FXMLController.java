@@ -133,14 +133,15 @@ public class FXMLController {
 		assert labelFondoPagina != null : "fx:id=\"labelFondoPagina\" was not injected: check your FXML file 'Scene.fxml'.";
 		assert clearAllB != null : "fx:id=\"clearAllB\" was not injected: check your FXML file 'Scene.fxml'.";
 
-		sceltaLinguaB.setValue("English");
-		sceltaLinguaB.setItems(lingue);
-		spazioFinale.setText("Welcome!");
-
 	}
 
 	public void setDizionario(Dictionary dizionario) {
 		this.dizionario = dizionario;
 		dizionario.loadDictionary("src/main/resources/English");
+
+		sceltaLinguaB.setValue("English");
+		sceltaLinguaB.setItems(lingue);
+		spazioFinale.setText("Welcome!");
+
 	}
 }
